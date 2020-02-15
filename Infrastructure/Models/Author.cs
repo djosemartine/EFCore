@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace EFCore.Models
+namespace Infrastructure.Models
 {
     public class Author
     {

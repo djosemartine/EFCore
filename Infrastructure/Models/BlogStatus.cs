@@ -1,4 +1,4 @@
-﻿namespace EFCore.Models
+﻿namespace Infrastructure.Models
 {
     public enum BlogStatus
     {

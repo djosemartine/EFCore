@@ -1,5 +1,4 @@
-using EFCore.DbContexts;
-using Microsoft.EntityFrameworkCore;
+using Infrastructure.Extensions;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -26,10 +25,7 @@ namespace EFCore
                 .ConfigureServices((hostContext, services) =>
                 {
                     var configuration = hostContext.Configuration;
-                    services.AddDbContext<EFCoreContext>(options =>
-                    {
-                        options.UseMySql(configuration.GetConnectionString("BloggingDatabase"));
-                    });
+                    services.AddInfrastructureServices(configuration);
                     services.AddHostedService<Worker>();
                 });
     }

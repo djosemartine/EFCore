@@ -1,7 +1,7 @@
-﻿using EFCore.Models;
+﻿using Infrastructure.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace EFCore.DbContexts
+namespace Infrastructure.DbContexts
 {
     public class EFCoreContext : DbContext
     {
