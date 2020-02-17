@@ -1,7 +1,11 @@
-﻿using Infrastructure.DbContexts;
+﻿using Finbuckle.MultiTenant;
+using Infrastructure.DbContexts;
+using Infrastructure.Repositories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using System;
+using System.Reflection;
 
 namespace Infrastructure.Extensions
 {
@@ -9,10 +13,16 @@ namespace Infrastructure.Extensions
     {
         public static IServiceCollection AddInfrastructureServices(this IServiceCollection services, IConfiguration configuration)
         {
-            return services.AddDbContext<EFCoreContext>(options =>
-            {
-                options.UseMySql(configuration.GetConnectionString("BloggingDatabase"));
-            });
+            services.AddDbContext<TenantContext>(options =>
+                {
+                    options.UseMySql(configuration.GetConnectionString("TenantInfoDatabase"),
+                        m => m.MigrationsAssembly(Assembly.GetExecutingAssembly().GetName().FullName));
+                });
+            services.AddScoped<IAuthorRepository, AuthorRepository>();
+            services.AddMultiTenant()
+                .WithEFCoreStore<TenantContext>()
+                .WithStaticStrategy("tenant1");
+            return services;
         }
     }
 }
